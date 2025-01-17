@@ -3,10 +3,9 @@ class Solution {
         String answer = "";
         
         String firstPart = my_string.substring(0, s);
-        String overwritePart = overwrite_string;
         String lastPart = my_string.substring(s + overwrite_string.length());
         
-        answer = firstPart + overwritePart + lastPart ;
+        answer = firstPart + overwrite_string + lastPart ;
         return answer;
     }
     
