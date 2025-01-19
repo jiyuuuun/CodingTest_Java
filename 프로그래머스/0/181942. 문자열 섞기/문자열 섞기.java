@@ -4,12 +4,8 @@ class Solution {
         for (int i=0; i<str1.length(); i++) {
             answer += str1.charAt(i);
             answer += str2.charAt(i);
-        }
-            
+        }    
         return answer;
     }
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-        System.out.print(solution);
-    }
+    
 }
