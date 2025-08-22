@@ -1,54 +1,48 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
-    static int parent[];
+    static int[] parent;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        int M = sc.nextInt();
-        parent = new int[N+1];
-        for (int i = 0; i < N+1; i++) { // 대표 노드 초기화
+
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        
+        parent = new int[n+1];
+        for (int i = 0; i <= n; i++) {
             parent[i] = i;
         }
 
-        for (int i = 0; i < M; i++) { // 질의 계산하는 부분
-            int question = sc.nextInt();
+        for (int i = 0; i < m; i++) {
+            int what = sc.nextInt();
             int a = sc.nextInt();
             int b = sc.nextInt();
-            if(question == 0) { // union
+
+            if(what == 0) { // 합집합
                 union(a,b);
-            }
-            else { // 두 원소 같은지 보기
-                boolean result = checkSame(a,b);
-                if(result) {
-                    System.out.println("YES");
-                }
-                else {
-                    System.out.println("NO");
+            } else { // 같은 집합인지 확인
+                if(find(a) == find(b)) {
+                    System.out.println("yes");
+                } else {
+                    System.out.println("no");
                 }
             }
         }
     }
 
-    private static void union(int a, int b) {
-        a = find(a);
-        b = find(b);
-        if(a!=b) {
-            parent[b] = a; // 두개 연결
-        }
+    // 대표 찾기
+    static int find(int x) {
+        if(parent[x] == x) return x;
+        return parent[x] = find(parent[x]);
     }
 
-    private static int find(int a) {
-        if(a == parent[a]) return a;
-        else {
-            return parent[a] = find(parent[a]);
-        }
-    }
+    // 합치기
+    static void union(int a, int b) {
+        int rootA = find(a);
+        int rootB = find(b);
 
-    private static boolean checkSame(int a, int b) {
-        a = find(a);
-        b = find(b);
-        if(a==b) return true;
-        return false;
+        if(rootA != rootB) {
+            parent[rootB] = rootA; // rootA 밑에 rootB 연결
+        }
     }
 }
