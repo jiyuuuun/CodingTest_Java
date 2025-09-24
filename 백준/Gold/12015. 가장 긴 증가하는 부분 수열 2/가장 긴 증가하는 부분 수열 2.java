@@ -19,7 +19,7 @@ public class Main {
 
         for (int num : A) {
             if (lis.isEmpty() || lis.get(lis.size()-1) < num) {
-                lis.add(num); // 마지막 값도가 크면 추가
+                lis.add(num); // 마지막 값보다 크면 추가
             } else {
                 // 이분 탐색으로 교체 위치 찾기
                 int left = 0;
@@ -38,4 +38,5 @@ public class Main {
 
         System.out.print(lis.size());
     }
+
 }
