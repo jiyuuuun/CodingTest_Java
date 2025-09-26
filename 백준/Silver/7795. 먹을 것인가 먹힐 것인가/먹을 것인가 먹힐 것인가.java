@@ -28,7 +28,7 @@ public class Main {
                 B[j] = Integer.parseInt(input2[j]);
             }
 
-            Arrays.sort(B); // 1 3 6
+            Arrays.sort(B); // B 정렬
 
             int answer = 0;
 
@@ -48,4 +48,5 @@ public class Main {
 
         System.out.print(sb);
     }
+
 }
