@@ -6,7 +6,6 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
 
         int limit = 1000000;
         boolean[] isPrime = new boolean[limit+1];
@@ -42,4 +41,5 @@ public class Main {
             }
         }
     }
+
 }
