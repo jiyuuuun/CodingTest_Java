@@ -4,7 +4,6 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
-    static int N;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -15,4 +14,5 @@ public class Main {
 
         System.out.print((int)Math.sqrt(N));
     }
+
 }
