@@ -1,44 +1,60 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine()); // 명령 수
 
-        LinkedList<Integer> q = new LinkedList<>();
+        Deque<Integer> dq = new ArrayDeque<>(); // Deque: 양쪽 접근 가능
 
         for (int i = 0; i < N; i++) {
-            String str = sc.next();
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            String input = st.nextToken();
 
-            if(str.equals("push")) {
-                int num = sc.nextInt();
-                q.add(num);
-            } else if(str.equals("pop")) {
-                if(q.size()==0) {
-                    System.out.println(-1);
-                } else {
-                    System.out.println(q.poll());
-                }
-            } else if (str.equals("size")){
-                System.out.println(q.size());
-            } else if(str.equals("empty")) {
-                if(q.size()==0) {
-                    System.out.println(1);
-                } else {
-                    System.out.println(0);
-                }
-            } else if(str.equals("front")) {
-                if(q.size()==0) {
-                    System.out.println(-1);
-                } else {
-                    System.out.println(q.peek());
-                }
-            } else if(str.equals("back")) {
-                if(q.size()==0) {
-                    System.out.println(-1);
-                } else {
-                    System.out.println(q.getLast());
-                }
+            switch (input) {
+                case "push" :
+                    int num = Integer.parseInt(st.nextToken());
+                    dq.add(num);
+                    break;
+
+                case "pop" :
+                    if (dq.isEmpty()) {
+                        System.out.println(-1);
+                    } else {
+                        System.out.println(dq.poll());
+                    }
+                    break;
+
+                case "size" :
+                    System.out.println(dq.size());
+                    break;
+
+                case "empty" :
+                    if (dq.isEmpty()) {
+                        System.out.println(1);
+                    } else {
+                        System.out.println(0);
+                    }
+                    break;
+
+                case "front" :
+                    if (dq.isEmpty()) {
+                        System.out.println(-1);
+                    } else {
+                        System.out.println(dq.peek());
+                    }
+                    break;
+
+                case "back" :
+                    if (dq.isEmpty()) {
+                        System.out.println(-1);
+                    } else {
+                        System.out.println(dq.peekLast());
+                    }
+                    break;
             }
         }
     }
