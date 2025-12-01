@@ -1,45 +1,52 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int testCase = sc.nextInt();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < testCase; i++) {
+        int T = Integer.parseInt(br.readLine());
 
-            int N = sc.nextInt(); // 문서 개수
-            int M = sc.nextInt(); // 궁금한 문서 위치
-            
-            Queue<int[]> q = new LinkedList<>(); // [중요도, 인덱스]
+        while (T-- > 0) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int N = Integer.parseInt(st.nextToken()); // 문서 개수
+            int M = Integer.parseInt(st.nextToken()); // 궁금한 문서 위치
 
-            for (int j = 0; j < N; j++) {
-                int importance = sc.nextInt();
-                q.add(new int[] {importance, j});
+            st = new StringTokenizer(br.readLine());
+            Queue<int[]> q = new LinkedList<>();
+            PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+
+            for (int i = 0; i < N; i++) {
+                int priority = Integer.parseInt(st.nextToken());
+                q.add(new int[]{i, priority}); // {문서번호, 중요도}
+                pq.offer(priority);
             }
 
-            int seq = 0; // 출력 순서
+            int count = 0;
 
-            while(!q.isEmpty()) {
+            while (true) {
                 int[] cur = q.poll();
-                boolean hasHigher = false;
-                
-                for(int[] doc : q) {
-                    if(doc[0] > cur[0]) {
-                        hasHigher = true;
+
+                // 현재 문서가 가장 높은 우선순위인지 확인
+                if (cur[1] == pq.peek()) {
+                    pq.poll();
+                    count++;
+
+                    // 내가 찾는 문서였으면 출력
+                    if (cur[0] == M) {
+                        sb.append(count).append("\n");
                         break;
                     }
-                }
-                
-                if(hasHigher) {
-                    q.add(cur);
                 } else {
-                    seq++;
-                    if(cur[1] == M) {
-                        System.out.println(seq);
-                        break;
-                    }
+                    // 우선순위 아니면 뒤로 보내기
+                    q.add(cur);
                 }
             }
         }
+
+        System.out.println(sb);
     }
 }
