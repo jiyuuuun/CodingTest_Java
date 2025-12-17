@@ -1,47 +1,63 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String str = sc.nextLine();
-        int M = sc.nextInt(); // 명령어의 개수
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String str = br.readLine();
 
-        Deque<Character> left = new ArrayDeque<>();
-        Deque<Character> right = new ArrayDeque<>();
+        Stack<Character> left = new Stack<>();
+        Stack<Character> right = new Stack<>();
 
-        // 초기 문자열을 left 스택에 넣음
-        for(char c : str.toCharArray()) {
-            left.addLast(c);
+        for (int i = 0; i < str.length(); i++) {
+            left.push(str.charAt(i));
         }
 
-        for (int i = 0; i < M; i++) {
-            String cmd = sc.next();
+        int M = Integer.parseInt(br.readLine()); // 명령어 개수
+
+        while (M-- > 0) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            String cmd = st.nextToken();
+
             switch (cmd) {
-                case "L":
-                    if(!left.isEmpty()) {
-                        right.addFirst(left.removeLast());
+                case "L" :
+                    if (!left.isEmpty()) {
+                        right.push(left.pop());
                     }
                     break;
-                case "D":
-                    if(!right.isEmpty()) {
-                        left.addLast(right.removeFirst());
+
+                case "D" :
+                    if (!right.isEmpty()) {
+                        left.push(right.pop());
                     }
                     break;
-                case "B":
-                    if(!left.isEmpty()) {
-                        left.removeLast();
+
+                case "B" :
+                    if (!left.isEmpty()) {
+                        left.pop();
                     }
                     break;
-                case "P":
-                    char add = sc.next().charAt(0);
-                    left.addLast(add);
+
+                case "P" :
+                    char add = st.nextToken().charAt(0);
+                    left.push(add);
                     break;
             }
         }
 
         StringBuilder sb = new StringBuilder();
-        for (char c:left) sb.append(c);
-        for (char c:right) sb.append(c);
-        System.out.print(sb.toString());
+
+        while (!left.isEmpty()) {
+            right.push(left.pop());
+        }
+
+        while (!right.isEmpty()) {
+            sb.append(right.pop());
+        }
+
+        System.out.println(sb);
+
     }
 }
