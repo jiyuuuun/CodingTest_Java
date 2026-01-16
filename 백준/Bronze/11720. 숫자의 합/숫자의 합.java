@@ -1,16 +1,21 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        String sNum = sc.next();
-        char[] cNum = sNum.toCharArray();
-
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        int N = Integer.parseInt(br.readLine());
+        String S = br.readLine();
+        
         int sum = 0;
-        for (int i = 0; i < cNum.length; i++) {
-            sum += cNum[i] - '0';
+    
+        for (int i=0; i<N; i++) {
+            int n = S.charAt(i) - '0';
+            sum += n;
         }
+        
         System.out.println(sum);
     }
 }
