@@ -15,7 +15,7 @@ public class Main {
             char c = S.charAt(i);
             int idx = c - 'a';
             
-            // 처음 등장한 위치치
+            // 처음 등장한 위치
             if (arr[idx] == -1) {
                 arr[idx] = i;
             }
@@ -28,4 +28,5 @@ public class Main {
         
         System.out.println(sb);
     }
+
 }
