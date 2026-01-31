@@ -1,23 +1,23 @@
 import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        int[] nums = new int[5];
-
-        // 평균
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        int[] arr = new int[5];
         int sum = 0;
-        for (int i = 0; i < 5; i++) {
-            nums[i] = sc.nextInt();
-            sum += nums[i];
+        int mid = 0;
+        
+        for (int i=0; i<5; i++) {
+            arr[i] = Integer.parseInt(br.readLine());
+            sum += arr[i];
         }
-        int avg = sum / 5;
-        System.out.println(avg);
-
-        // 중앙값
-        Arrays.sort(nums);
-        System.out.print(nums[2]);
-
+        
+        Arrays.sort(arr);
+        
+        System.out.println(sum/5); // 평균
+        System.out.println(arr[2]); // 중앙값
     }
 }
