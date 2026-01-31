@@ -1,29 +1,23 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String str = sc.next();
-        int A[] = new int[str.length()];
-        for (int i = 0; i < str.length(); i++) {
-            A[i] = Integer.parseInt(str.substring(i, i+1));
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        
+        List<Integer> list = new ArrayList<>();
+        
+        while (N > 0) {
+            list.add(N % 10);
+            N /= 10;
         }
-        // 선택 정렬을 구현하는 영역
-        for (int i = 0; i < str.length(); i++) {
-            int Max = i;
-            for (int j = i+1; j < str.length(); j++) {
-                if(A[j] > A[Max]) {
-                    Max = j;
-                }
-            }
-            if (A[i] < A[Max]) {
-                int temp = A[i];
-                A[i] = A[Max];
-                A[Max] = temp;
-            }
-        }
-        for (int i = 0; i < str.length(); i++) {
-            System.out.print(A[i]);
+        
+        Collections.sort(list, Collections.reverseOrder());
+        
+        for (int a : list) {
+            System.out.print(a);
         }
     }
 }
