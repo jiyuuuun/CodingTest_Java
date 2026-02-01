@@ -1,25 +1,32 @@
 import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        int N = sc.nextInt();
-        Map<Integer, Integer> countMap = new HashMap<>();
-
-        for (int i = 0; i < N; i++) {
-            int num = sc.nextInt();
-            countMap.put(num, countMap.getOrDefault(num, 0) +1);
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        
+        Set<Integer> set = new HashSet<>(); // 집합
+        
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for (int i=0; i<N; i++) {
+            set.add(Integer.parseInt(st.nextToken()));
         }
-
-        int M = sc.nextInt();
-        for (int i = 0; i < M; i++) {
-            int check = sc.nextInt();
-            if(countMap.containsKey(check)) { 
-                System.out.print("1 ");
+        
+        int M = Integer.parseInt(br.readLine());
+        StringBuilder sb = new StringBuilder();
+        
+        st = new StringTokenizer(br.readLine());
+        for (int i=0; i<M; i++) {
+            if (set.contains(Integer.parseInt(st.nextToken()))) {
+                sb.append(1);
             } else {
-                System.out.print("0 ");
+                sb.append(0);
             }
+            sb.append(" ");
         }
+        
+        System.out.println(sb);
     }
 }
