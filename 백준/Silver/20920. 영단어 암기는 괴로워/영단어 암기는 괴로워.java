@@ -1,44 +1,45 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken()); // 단어의 개수
+        
+        int N = Integer.parseInt(st.nextToken()); // 단어 수
         int M = Integer.parseInt(st.nextToken()); // 단어 길이 기준
-
+        
         Map<String, Integer> map = new HashMap<>();
-        for (int i = 0; i < N; i++) {
+        
+        while (N-- > 0) {
             String word = br.readLine();
-
+            
             if (word.length() >= M) {
-                map.put(word, map.getOrDefault(word, 0) +1);
+                map.put(word, map.getOrDefault(word, 0) + 1);
             }
         }
-
-        List<Map.Entry<String, Integer>> list = new ArrayList<>(map.entrySet());
-
-        list.sort((a,b) -> {
-            // 1. 자주 나오는 단어일수록 앞에 (빈도 내림차순)
-            if (!a.getValue().equals(b.getValue())) {
-                return Integer.compare(b.getValue(), a.getValue());
+        
+        List<String> words = new ArrayList<>(map.keySet());
+        
+        Collections.sort(words, (a,b) -> {
+            // 1. 빈도 내림차순
+            if (map.get(a) != map.get(b)) {
+                return map.get(b) - map.get(a);
             }
-            // 2. 단어 길이가 길수록 앞에
-            if (a.getKey().length() != b.getKey().length()) {
-                return Integer.compare(b.getKey().length(), a.getKey().length());
+            // 2. 길이 내림차순
+            if (a.length() != b.length()) {
+                return b.length() - a.length();
             }
-            // 3. 알파벳 사전 순
-            return a.getKey().compareTo(b.getKey());
+            // 3. 사전순 오름차순
+            return a.compareTo(b);
         });
-
+        
         StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, Integer> entry : list) {
-            sb.append(entry.getKey()).append("\n");
+        for (String word : words) {
+            sb.append(word).append("\n");
         }
-
-        System.out.print(sb);
+        
+        System.out.println(sb);
     }
 }
