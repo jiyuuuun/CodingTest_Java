@@ -1,65 +1,62 @@
 import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        int N = sc.nextInt(); // 수의 개수
-
-        int[] nums = new int[N];
-        for (int i = 0; i < N; i++) {
-            nums[i] = sc.nextInt();
-        }
-
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        
         StringBuilder sb = new StringBuilder();
-
-        // 산술평균
         int sum = 0;
-        for (int i = 0; i < N; i++) {
-            sum += nums[i];
+        
+        int[] arr = new int[N];
+        for (int i=0; i<N; i++) {
+            arr[i] = Integer.parseInt(br.readLine());
+            sum += arr[i];
         }
-        double avgDouble = (double) sum / N;
-        int avg = (int) Math.round(avgDouble);
-        sb.append(avg).append("\n");
-
-        // 중앙값
-        Arrays.sort(nums);
-        int mid = nums[N/2];
-        sb.append(mid).append("\n");
-
+        
+        Arrays.sort(arr);
+        
+        // 산술평균
+        sb.append((int) Math.round((double) sum/N)).append("\n");
+        
+        // 중앙
+        sb.append(arr[N/2]).append("\n");
+        
         // 최빈값
         Map<Integer, Integer> map = new HashMap<>();
-        for (int x : nums) {
-            map.put(x, map.getOrDefault(x,0) +1);
+        
+        // 각 숫자의 등장 횟수 세기
+        for (int x:arr) {
+            map.put(x, map.getOrDefault(x, 0)+1);
         }
-
-        // 1. 최빈도 찾기
-        int maxFreq = Collections.max(map.values());
-
-        // 2. 최빈값 후보 모으기
-        List<Integer> candidates = new ArrayList<>();
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            if (entry.getValue() == maxFreq) {
-                candidates.add(entry.getKey());
+        
+        // 가장 많이 등장한 횟수 찾기
+        int maxFreq = 0;
+        for (int v : map.values()) {
+            maxFreq = Math.max(maxFreq, v);
+        }
+        
+        // 최빈값 후보들 수집
+        List<Integer> modes = new ArrayList<>();
+        for (int key : map.keySet()) {
+            if (map.get(key) == maxFreq) {
+                modes.add(key);
             }
         }
-
-        // 3. 정렬
-        Collections.sort(candidates);
-
-        // 4. 출력
-        if (candidates.size() > 1) {
-            sb.append(candidates.get(1)).append("\n"); // 두 번째로 작은 값
+        
+        Collections.sort(modes);
+        
+        // 여러 개면 두번째 값 선택
+        if (modes.size()==1) {
+            sb.append(modes.get(0)).append("\n");
         } else {
-            sb.append(candidates.get(0)).append("\n"); // 유일한 최빈값
+            sb.append(modes.get(1)).append("\n");
         }
-
-
-        // 범위
-        int ran = nums[N-1] - nums[0];
-        sb.append(ran);
-
-
-        System.out.print(sb);
+    
+        sb.append(arr[N-1]-arr[0]);
+        
+        System.out.println(sb);
     }
 }
