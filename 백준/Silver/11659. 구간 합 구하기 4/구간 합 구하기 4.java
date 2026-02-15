@@ -1,27 +1,43 @@
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Scanner;
+import java.util.*;
 import java.io.BufferedReader;
-import java.util.StringTokenizer;
+import java.io.InputStreamReader;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
-
-        int suNo = Integer.parseInt(stringTokenizer.nextToken());
-        int quizNo = Integer.parseInt(stringTokenizer.nextToken());
-        long[] S = new long[suNo + 1];
-        stringTokenizer = new StringTokenizer(bufferedReader.readLine());
-
-        for (int i = 1; i <= suNo; i++) {
-            S[i] = S[i-1] + Integer.parseInt(stringTokenizer.nextToken());
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        int N = Integer.parseInt(st.nextToken()); // 수의 개수
+        int M = Integer.parseInt(st.nextToken()); // 구간 합 횟수
+        
+        int[] arr = new int[N+1];
+        
+        String[] input = br.readLine().split(" ");
+        for (int i=1; i<=N; i++) {
+            arr[i] = Integer.parseInt(input[i-1]);
         }
-        for (int q = 0; q < quizNo; q++) {
-            stringTokenizer = new StringTokenizer(bufferedReader.readLine());
-            int i = Integer.parseInt(stringTokenizer.nextToken());
-            int j = Integer.parseInt(stringTokenizer.nextToken());
-            System.out.println(S[j] - S[i-1]);
+        
+        // 누적합 배열
+        int[] prefix = new int[N+1];
+        prefix[0] = 0;
+        
+        //누적합 계산
+        for (int i=1; i<=N; i++) {
+            prefix[i] = prefix[i-1] + arr[i];
         }
+        
+        StringBuilder sb = new StringBuilder();
+        
+        while (M-- > 0) {
+            st = new StringTokenizer(br.readLine());
+            int i = Integer.parseInt(st.nextToken());
+            int j = Integer.parseInt(st.nextToken());
+            
+            // i ~ j 구간 합
+            sb.append(prefix[j] - prefix[i-1]).append("\n");
+        }
+        
+        System.out.println(sb);
+        
     }
 }
