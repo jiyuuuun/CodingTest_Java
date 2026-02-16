@@ -1,22 +1,31 @@
 import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        int N = sc.nextInt(); // 사람의 수
-        int[] A = new int[N];
-
-        for (int i = 0; i < N; i++) {
-            A[i] = sc.nextInt();
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine()); // 사람 수
+        
+        int[] time = new int[N];
+        
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        for (int i=0; i<N; i++) {
+            time[i] = Integer.parseInt(st.nextToken());
         }
-
-        Arrays.sort(A);
-
+        
+        Arrays.sort(time);
+        
         int sum = 0;
-        for (int i = 0; i < N; i++) {
-            sum += A[i] * (N-i);
+        int answer = 0;
+        
+        for (int i=0; i<N; i++) {
+            sum += time[i];
+            answer += sum;
         }
-        System.out.print(sum);
+        
+        System.out.println(answer);
+        
     }
 }
