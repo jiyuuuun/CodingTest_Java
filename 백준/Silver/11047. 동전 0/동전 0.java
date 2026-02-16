@@ -1,22 +1,31 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        int K = sc.nextInt();
-        int A[] = new int[N];
-        for (int i = 0; i < N; i++) {
-            A[i] = sc.nextInt();
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        int N = Integer.parseInt(st.nextToken()); // 동전 종류
+        int K = Integer.parseInt(st.nextToken()); // 가치 합
+        
+        int[] arr = new int[N];
+        
+        for (int i=0; i<N; i++) {
+            arr[i] = Integer.parseInt(br.readLine());
         }
-        // 그리디 알고리즘 -> 최대한 큰 동전 먼저 사용하기
-        int count = 0;
-        for (int i = N-1; i >= 0; i--) {
-            if(A[i] <= K) {
-                count += (K/A[i]);
-                K = K % A[i];
+        
+        int answer = 0;
+        
+        // 그리디 알고리즘
+         for (int i=N-1; i>=0; i--) {
+            if (arr[i] <= K) {
+                answer += (K/arr[i]);
+                K %= arr[i];
             }
         }
-        System.out.println(count);
+        
+        System.out.println(answer);
     }
 }
