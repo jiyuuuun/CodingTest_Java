@@ -1,25 +1,32 @@
 import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
         
-        Map<Integer, Integer> countMap = new HashMap<>();
+        // 해시를 사용한 맵
+        Map<Integer, Integer> map = new HashMap<>();
         
-        for(int i=0; i<N; i++) {
-            int num = sc.nextInt();
-            countMap.put(num, countMap.getOrDefault(num, 0) +1);
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        for (int i=0; i<N; i++) {
+            int num = Integer.parseInt(st.nextToken());
+            map.put(num, map.getOrDefault(num, 0) + 1);
         }
         
-        int M = sc.nextInt();
         StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < M; i++) {
-            int check = sc.nextInt();
-            sb.append(countMap.getOrDefault(check, 0)).append(" ");
+        
+        int M = Integer.parseInt(br.readLine());
+        st = new StringTokenizer(br.readLine());
+        
+        for (int i=0; i<M; i++) {
+            int check = Integer.parseInt(st.nextToken());
+            sb.append(map.getOrDefault(check, 0)).append(" ");
         }
         
-        System.out.println(sb.toString());
+        System.out.println(sb);
     }
 }
