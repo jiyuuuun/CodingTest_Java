@@ -1,39 +1,59 @@
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
+import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        int M = sc.nextInt();
-        ArrayList<ArrayList<Integer>> A = new ArrayList<>();
-        for (int i = 0; i <= N; i++) {
-            A.add(new ArrayList<>());
+    static ArrayList<Integer>[] graph;
+    static int[] indegree;
+    static Queue<Integer> q = new LinkedList<>();
+    
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        int N = Integer.parseInt(st.nextToken()); // 학생 수
+        int M = Integer.parseInt(st.nextToken()); // 비교 횟수
+        
+        graph = new ArrayList[N+1];
+        indegree = new int[N+1];
+        
+        // 인접 리스트 초기화
+        for (int i=1; i<=N; i++) {
+            graph[i] = new ArrayList<>();
         }
-        int indegree[] = new int[N+1];
-        for (int i = 0; i < M; i++) {
-            int S = sc.nextInt();
-            int E = sc.nextInt();
-            A.get(S).add(E);
-            indegree[E]++; // 진입차수 배열 데이터 저장 부분
+        
+        // 그래프 구성 + 진입차수 계산
+        while (M-- > 0) {
+            st = new StringTokenizer(br.readLine());
+            int A = Integer.parseInt(st.nextToken());
+            int B = Integer.parseInt(st.nextToken());
+            
+            graph[A].add(B); // A -> B
+            indegree[B]++; // B의 진입차수 증가
         }
-
-        //위상정렬 실행
-        Queue<Integer> queue = new LinkedList<>();
-        for (int i = 1; i <= N ; i++) {
-            if(indegree[i]==0) {
-                queue.offer(i);
+        
+        for (int i=1; i<=N; i++) {
+            if (indegree[i] == 0) {
+                q.offer(i);
             }
         }
-        while(!queue.isEmpty()) {
-            int now = queue.poll();
-            System.out.print(now + " ");
-            for (int next : A.get(now)) {
+        
+        bfs(); // 위상정렬
+    }
+    
+    // BFS 기반 위상정렬
+    static void bfs() {
+        while (!q.isEmpty()) {
+            int cur = q.poll();
+            System.out.print(cur + " ");
+            
+            // 연결된 노드들의 진입차수 감소
+            for (int next : graph[cur]) {
                 indegree[next]--;
-                if(indegree[next]==0) {
-                    queue.offer(next);
+                
+                // 진입차수가 0이 되면 큐에 추가
+                if (indegree[next] == 0) {
+                    q.offer(next);
                 }
             }
         }
