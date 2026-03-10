@@ -1,35 +1,40 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
+import java.io.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st1 = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(br.readLine());
         
-        int n = Integer.parseInt(st1.nextToken()); // 수열의 크기
         int[] a = new int[n];
-
+        
         String[] input = br.readLine().split(" ");
-        for (int i = 0; i < n; i++) {
+        for (int i=0; i<n; i++) {
             a[i] = Integer.parseInt(input[i]);
         }
         
-        Arrays.sort(a);
-
-        StringTokenizer st2 = new StringTokenizer(br.readLine());
-        int x = Integer.parseInt(st2.nextToken());
+        Arrays.sort(a); // 정렬
+        
+        int x = Integer.parseInt(br.readLine());
+        
         int count = 0;
-        for (int i = 0; i < n; i++) {
-            for (int j = i+1; j < n; j++) {
-                if (a[i] + a[j] == x) {
-                    count++;
-                    break;
-                }
+        int left = 0;
+        int right = n-1;
+        
+        // 투포인터
+        while (left < right) {
+            if (a[left] + a[right] < x) {
+                left++;
+            } else if (a[left] + a[right] > x) {
+                right--;
+            } else {
+                count++;
+                left++;
+                right--;
             }
         }
         
-        System.out.print(count);
+        System.out.println(count);
+        
     }
 }
